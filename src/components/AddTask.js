@@ -1,19 +1,29 @@
 import React from "react";
 
-export const AddTask = ({ taskList, setTaskList }) => {
+export const AddTask = ({ taskList, setTaskList, task, setTask }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const date = new Date();
-    const newTask = {
-      id: date.getTime(),
-      name: e.target.task.value,
-      time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}`,
-    }
+    if (task.id) {
+      const date = new Date();
+      const updatedTask = {
+        id: task.id,
+        name: task.name,
+        time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}`,
+      }
 
-    setTaskList([...taskList, newTask]);
-    e.target.task.value = "";
-  }
+    } else {
+      const date = new Date();
+      const newTask = {
+        id: date.getTime(),
+        name: e.target.task.value,
+        time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}`,
+      };
+
+      setTaskList([...taskList, newTask]);
+      e.target.task.value = "";
+    }
+  };
 
   return (
     <section className="addTask">
@@ -21,6 +31,7 @@ export const AddTask = ({ taskList, setTaskList }) => {
         <input
           type="text"
           name="task"
+          value={task.name}
           autoComplete="off"
           placeholder="add task"
         />
