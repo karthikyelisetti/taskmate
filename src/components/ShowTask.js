@@ -11,6 +11,7 @@ export const ShowTask = ({ taskList, setTaskList, task, setTask }) => {
     const updatedTaskList = taskList.filter(todo => id !== todo.id);
     setTaskList(updatedTaskList);
   }
+
   return (
     <section className="showTask">
       <div className="head">
