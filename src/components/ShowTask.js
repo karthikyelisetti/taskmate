@@ -3,7 +3,8 @@ import React from "react";
 export const ShowTask = ({ taskList, setTaskList, task, setTask }) => {
 
   const handleEdit = (id) => {
-
+    const selectedTask = taskList.find(todo => todo.id === id);
+    setTask(selectedTask);
   }
   
   const handleDelete = (id) => {

@@ -6,11 +6,17 @@ export const AddTask = ({ taskList, setTaskList, task, setTask }) => {
 
     if (task.id) {
       const date = new Date();
-      const updatedTask = {
-        id: task.id,
-        name: task.name,
-        time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}`,
-      }
+      const updatedTaskList = taskList.map((todo) => (
+        todo.id === task.id
+          ? {
+              id: task.id,
+              name: task.name,
+              time: `${date.toLocaleTimeString()} ${date.toLocaleDateString()}`,
+            }
+          : todo
+      ));
+      setTaskList(updatedTaskList);
+      setTask({});
 
     } else {
       const date = new Date();
@@ -22,6 +28,7 @@ export const AddTask = ({ taskList, setTaskList, task, setTask }) => {
 
       setTaskList([...taskList, newTask]);
       e.target.task.value = "";
+      setTask({});
     }
   };
 
@@ -31,11 +38,12 @@ export const AddTask = ({ taskList, setTaskList, task, setTask }) => {
         <input
           type="text"
           name="task"
-          value={task.name}
+          value={task.name || ""}
           autoComplete="off"
           placeholder="add task"
+          onChange={e => setTask({...task, name: e.target.value})}
         />
-        <button type="submit">Add</button>
+        <button type="submit">{task.id ? "Update" : "Add"}</button>
       </form>
     </section>
   );
